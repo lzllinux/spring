@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	<!-- 配置bean -->
+	<bean id="hello" scope="prototype" class="cn.lzl.spring.bean.Hello">
+		<property name="name" value="lzlgd"></property>
+	</bean>
+	<!-- seter注入 -->
+	<bean id="s1" class="cn.lzl.spring.bean.Student" init-method="toString">
+		<property name="id" value="1"></property>
+		<property name="name" value="lzl"></property>
+		<property name="sex" value="男"></property>
+	</bean>
+	<!-- 构造方法注入 scope属性缺省值为singleton(一个实例)prototype(多个) -->
+	<bean id="s2" class="cn.lzl.spring.bean.Student" scope="prototype">
+		<constructor-arg value="#{s1.id}"></constructor-arg>
+		<constructor-arg value="#{s1.name}"></constructor-arg>
+		<constructor-arg value="#{s1.sex}"></constructor-arg>
+	</bean>
+	<!-- -->
+	<bean id="s3" class="cn.lzl.spring.bean.Student" p:name="lzl"></bean>
+	<!-- 通过静态工厂方法 -->
+	<bean id="cal" class="java.util.Calendar" factory-method="getInstance">
+	</bean>
+	<!-- 使用实例工厂方法 使用实例的方法 -->
+	<bean id="time" factory-bean="cal" factory-method="getTime"></bean>
+	<!-- 使用接口 -->
+	<bean id="A" class="cn.lzl.inter.A"></bean>
+	<bean id="B" class="cn.lzl.inter.B"></bean>
+	<bean id="test" class="cn.lzl.inter.TestAB">
+		<property name="AB" ref="A"></property>
+	</bean>
+	<!-- 通过注解配置 -->
+	<!-- <context:component-scan base-package="cn.lzl.aonn"></context:component-scan> -->
+
+</beans>
+
